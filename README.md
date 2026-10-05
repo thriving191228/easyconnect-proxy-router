@@ -1,5 +1,4 @@
-<img width="903" height="494" alt="image" src="https://github.com/user-attachments/assets/60d451f1-ac6a-4e94-be1d-006655b7a1ae" /># easyconnect-macos-
-解决easyconnect劫持所有流量导致无法连接服务器的同时使用claude/codex的情况
+# 解决easyconnect劫持所有流量导致无法连接服务器的同时使用claude/codex的情况
 
 ### 原理
 
