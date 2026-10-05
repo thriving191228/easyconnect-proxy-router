@@ -45,7 +45,7 @@ docker run -d --name ec --restart unless-stopped \
 
 ##### 4. 登录 VPN
 
-在 Finder 里按 Cmd+K，输入 vnc://127.0.0.1:5901，然后输入 VNC 密码。在打开的 EasyConnect 窗口里填 https://remote.hkust-gz.edu.cn，像平时一样登录。
+在 Finder 里按 Cmd+K，输入 vnc://127.0.0.1:5901，然后输入第三步设置的 VNC 密码。在打开的 EasyConnect 窗口里填你的地址 ，像平时一样登录。
 
 登录成功后，关掉 VNC 窗口就行，容器会在后台继续运行。想确认是否登录成功，可以运行：
 ```
@@ -53,7 +53,7 @@ docker exec ec ip addr show tun0   # 能看到 10.x.x.x 的地址就是登上了
 ```
 <img width="1806" height="988" alt="image" src="https://github.com/user-attachments/assets/015124f4-d843-47e2-b62f-73ee20b46f33" />
 
-5. 配置 ssh
+##### 5. 配置 ssh
 
 在 ~/.ssh/config 里，给要连的内网服务器加一行 ProxyCommand，如：
 ```
@@ -69,28 +69,18 @@ ssh 服务器别名
 ```
 VS Code 的 Remote-SSH 用的也是这份配置，同样能直接连。
 
-日常使用
-
-┌────────────────┬───────────────────────────────────────────────────────────────────────────────────┐
-│      场景      │                                       操作                                         │
-├────────────────┼───────────────────────────────────────────────────────────────────────────────────┤
-│ 用完           │ 直接退出 OrbStack                                                                   │
-├────────────────┼───────────────────────────────────────────────────────────────────────────────────┤
-│ 下次用         │ 打开 OrbStack，容器会自动启动，然后用 VNC 重新登录 EasyConnect（Finder下按cmd+K           │
-├────────────────┼───────────────────────────────────────────────────────────────────────────────────┤
-
-常见的问题和解法
+### 常见的问题和解法
 
 1. Path selection failed, possibly because network connection error occurs（第一次）
 原因是容器里的 DNS 坏了，解析不了路径。解决办法是在启动命令里手动指定 DNS，如：--dns 114.114.114.114 --dns 223.5.5.5。
 
-3. Network connection error occurred
+2. Network connection error occurred
 OrbStack 默认会把容器流量转给系统代理（v2rayN），流量走不通。运行 orb config set network_proxy none，再重启 OrbStack 就好了。
 
-4. Mac 上直连的网站全都打不开，只有走代理的网站能用
+3. Mac 上直连的网站全都打不开，只有走代理的网站能用
 Wi-Fi 通过 DHCP 自动分到的 DNS（192.168.1.1）根本不通，但路由器的实际地址是 192.168.0.1。手动改一下 DNS：
 ```
 networksetup -setdnsservers Wi-Fi 223.5.5.5 119.29.29.29
 ```
-5. The client version and server software version is not matching
+4. The client version and server software version is not matching
 服务器下发了强制更新的要求，客户端会把它缓存 12 小时，所以第一次能登上，后面就被拦了。用第 4 步的命令改版本号，然后重启容器。
