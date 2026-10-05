@@ -1,4 +1,4 @@
-# 解决easyconnect劫持所有流量导致无法连接服务器的同时使用claude/codex的情况
+# 解决easyconnect劫持所有流量导致无法连接服务器的同时使用claude/codex的情况(macos)
 
 ### 原理
 
